@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
 import store from "../store";
+import { productListAction } from "../store/actions/index";
 
 const List = () => {
   const [count, setCount] = useState(store.getState().counter.value);
   useEffect(() => {
+    console.log(store.getState());
     const unsubscribe = store.subscribe(() => {
-      // console.log(store.getState().counter.value);
-      setCount(store.getState().counter.value);
+      console.log(store.getState());
+      // setCount(store.getState().counter.value);
     });
-    return unsubscribe;                                                                                                                                                          f r
+    return unsubscribe;
   }, []);
 
   return (
     <div>
       <button
         onClick={() => {
-          store.dispatch({ type: "PLUS", payload: 1 });
+          store.dispatch(productListAction());
         }}
       >
         +

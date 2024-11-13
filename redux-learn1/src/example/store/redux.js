@@ -1,54 +1,54 @@
-const _redux = {}
-const _callBack = []
+const _redux = {};
+const _callBack = [];
 
 export default function CreateStroe(reducer) {
-  createState(reducer)
-  const dispatch = createDispatch(reducer)
-  const subscribe = createSubscribe(reducer)
+  createState(reducer);
+  const dispatch = createDispatch(reducer);
+  const subscribe = createSubscribe(reducer);
 
   return {
     dispatch,
     subscribe,
-    getState
-  }
+    getState,
+  };
 }
 
 function createState(reducer) {
-  let _state = reducer()
+  let _state = reducer();
 
-  Object.defineProperty(_redux, '_state', {
+  Object.defineProperty(_redux, "_state", {
     get: () => {
-      return _state
+      return _state;
     },
     set: (newValue) => {
-      if (_state === newValue) return
-      _state = newValue
-      publish()
-    }
-  })
+      if (_state === newValue) return;
+      _state = newValue;
+      publish();
+    },
+  });
 }
 
 function createDispatch(reducer) {
   return function (action) {
-    _redux._state = reducer(_redux._state, action)
-  }
+    _redux._state = reducer(_redux._state, action);
+  };
 }
 
 function createSubscribe() {
   return function (callBack) {
     if (_callBack.includes(callBack)) {
-      return
+      return;
     }
-    _callBack.push(callBack)
-  }
+    _callBack.push(callBack);
+  };
 }
 
 function publish() {
-  _callBack.forEach(cb => {
-    cb(_redux._state)
-  })
+  _callBack.forEach((cb) => {
+    cb(_redux._state);
+  });
 }
 
 function getState() {
-  return _redux?._state
+  return _redux?._state;
 }
